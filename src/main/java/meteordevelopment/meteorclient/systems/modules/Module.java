@@ -31,7 +31,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
 
     public final Category category;
     public final String name;
-    public final String title;
+    public String title;
     public final String description;
     public final String[] aliases;
     public final Color color;
@@ -42,6 +42,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     private boolean active;
     public boolean disabled;
     public boolean isCheat;
+    public boolean oneShot = false;
 
     public boolean serialize = true;
     public boolean runInMainMenu = false;
@@ -93,15 +94,23 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
         if (!isEnabled()) { return; }
         if (active) { return; }
 
-        active = true;
-        Modules.get().addActive(this);
+        if (oneShot) {
+            if (runInMainMenu || Utils.canUpdate()) {
+                if (callback) {
+                    onActivate();
+                }
+            }
+        } else {
+            active = true;
+            Modules.get().addActive(this);
+
+            if (runInMainMenu || Utils.canUpdate()) {
+                if (autoSubscribe) MeteorClient.EVENT_BUS.subscribe(this);
+                if (callback) { onActivate(); }
+            }
+        }
 
         settings.onActivated();
-
-        if (runInMainMenu || Utils.canUpdate()) {
-            if (autoSubscribe) MeteorClient.EVENT_BUS.subscribe(this);
-            if (callback) { onActivate(); }
-        }
     }
 
     public void deactivate() {
@@ -109,6 +118,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     }
 
     public void deactivate(boolean callback) {
+        if (oneShot) { return; }
         if (!active) { return; }
 
         if (runInMainMenu || Utils.canUpdate()) {

@@ -125,6 +125,8 @@ public class MeteorGuiTheme extends GuiTheme {
     );
 
     public final Setting<SettingColor> moduleBackground = color(sgBackgroundColors, "module-background", "Color of module background when active.", new SettingColor(196, 46, 0));
+    public final Setting<SettingColor> oneShotModuleBackground = color(sgBackgroundColors, "one-shot-module-background", "Color of a one-shot module background.", new SettingColor(0, 63, 109));
+    public final Setting<SettingColor> oneShotModuleForeground = color(sgBackgroundColors, "one-shot-module-foreground", "Color of a one-shot module foreground.", new SettingColor(0, 147, 255));
 
     // Outline
 

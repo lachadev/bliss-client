@@ -5,13 +5,20 @@
 
 package meteordevelopment.meteorclient.gui.themes.meteor.widgets;
 
+import meteordevelopment.meteorclient.MeteorClient;
 import meteordevelopment.meteorclient.gui.renderer.GuiRenderer;
+import meteordevelopment.meteorclient.gui.renderer.packer.GuiTexture;
 import meteordevelopment.meteorclient.gui.themes.meteor.MeteorGuiTheme;
 import meteordevelopment.meteorclient.gui.themes.meteor.MeteorWidget;
 import meteordevelopment.meteorclient.gui.utils.AlignmentX;
 import meteordevelopment.meteorclient.gui.widgets.pressable.WPressable;
 import meteordevelopment.meteorclient.systems.modules.Module;
+import net.minecraft.client.texture.AbstractTexture;
+import net.minecraft.client.texture.NativeImage;
+import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.util.math.MathHelper;
+
+import java.io.FileInputStream;
 
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
@@ -47,10 +54,11 @@ public class WMeteorModule extends WPressable implements MeteorWidget {
     @Override
     protected void onCalculateSize() {
         double pad = pad();
+        double offset = module.oneShot ? theme.scale(16.0) + pad : 0;
 
         if (titleWidth == 0) titleWidth = theme.textWidth(module.title);
 
-        width = pad + titleWidth + pad;
+        width = offset + pad + titleWidth + pad;
         height = pad + theme.textHeight() + pad;
     }
 
@@ -71,8 +79,12 @@ public class WMeteorModule extends WPressable implements MeteorWidget {
         animationProgress2 += delta * 6 * (module.isActive() ? 1 : -1);
         animationProgress2 = MathHelper.clamp(animationProgress2, 0, 1);
 
+        if (module.oneShot) {
+            renderer.quad(x, y, width, height, theme.oneShotModuleBackground.get());
+        }
+
         if (animationProgress1 > 0) {
-            renderer.quad(x, y, width * animationProgress1, height, theme.moduleBackground.get());
+            renderer.quad(x, y, width * animationProgress1, height, module.oneShot ? theme.oneShotModuleForeground.get() : theme.moduleBackground.get());
         }
         if (animationProgress2 > 0) {
             renderer.quad(x, y + height * (1 - animationProgress2), theme.scale(2), height * animationProgress2, theme.accentColor.get());
@@ -80,6 +92,16 @@ public class WMeteorModule extends WPressable implements MeteorWidget {
 
         double x = this.x + pad;
         double w = width - pad * 2;
+
+        if (module.oneShot) {
+            double size = theme.scale(16);
+            double offset = size + pad;
+
+            renderer.quad(x, y + (height - size) / 2, size, size, GuiRenderer.ONESHOT, theme.textColor.get());
+
+            x += offset;
+            w -= offset;
+        }
 
         if (theme.moduleAlignment.get() == AlignmentX.Center) {
             x += w / 2 - titleWidth / 2;

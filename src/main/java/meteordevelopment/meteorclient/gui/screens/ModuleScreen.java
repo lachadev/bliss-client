@@ -75,12 +75,14 @@ public class ModuleScreen extends WindowScreen {
         WButton reset = bind.add(theme.button(GuiRenderer.RESET)).expandCellX().right().widget();
         reset.action = keybind::resetBind;
 
-        // Toggle on bind release
-        WHorizontalList tobr = section.add(theme.horizontalList()).widget();
+        if (!module.oneShot) {
+            // Toggle on bind release
+            WHorizontalList tobr = section.add(theme.horizontalList()).widget();
 
-        tobr.add(theme.label("Toggle on bind release: "));
-        WCheckbox tobrC = tobr.add(theme.checkbox(module.toggleOnBindRelease)).widget();
-        tobrC.action = () -> module.toggleOnBindRelease = tobrC.checked;
+            tobr.add(theme.label("Toggle on bind release: "));
+            WCheckbox tobrC = tobr.add(theme.checkbox(module.toggleOnBindRelease)).widget();
+            tobrC.action = () -> module.toggleOnBindRelease = tobrC.checked;
+        }
 
         // Chat feedback
         WHorizontalList cf = section.add(theme.horizontalList()).widget();
@@ -94,12 +96,14 @@ public class ModuleScreen extends WindowScreen {
         // Bottom
         WHorizontalList bottom = add(theme.horizontalList()).expandX().widget();
 
-        // Active
-        bottom.add(theme.label("Active: "));
-        active = bottom.add(theme.checkbox(module.isActive())).expandCellX().widget();
-        active.action = () -> {
-            if (module.isActive() != active.checked) module.toggle();
-        };
+        if (!module.oneShot) {
+            // Active
+            bottom.add(theme.label("Active: "));
+            active = bottom.add(theme.checkbox(module.isActive())).expandCellX().widget();
+            active.action = () -> {
+                if (module.isActive() != active.checked) module.toggle();
+            };
+        }
 
         if (module.addon != null && module.addon != MeteorClient.ADDON) {
             bottom.add(theme.label("From: ")).right().widget();
