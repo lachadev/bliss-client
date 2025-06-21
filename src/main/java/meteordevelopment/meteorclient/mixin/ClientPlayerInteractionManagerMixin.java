@@ -5,6 +5,7 @@
 
 package meteordevelopment.meteorclient.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import meteordevelopment.meteorclient.MeteorClient;
 import meteordevelopment.meteorclient.events.entity.DropItemsEvent;
 import meteordevelopment.meteorclient.events.entity.player.*;
@@ -20,8 +21,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
-import net.minecraft.screen.PlayerScreenHandler;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -47,9 +46,6 @@ public abstract class ClientPlayerInteractionManagerMixin implements IClientPlay
     @Shadow protected abstract void syncSelectedSlot();
 
     @Shadow
-    public abstract void clickSlot(int syncId, int slotId, int button, SlotActionType actionType, PlayerEntity player);
-
-    @Shadow
     @Final
     private ClientPlayNetworkHandler networkHandler;
 
@@ -64,33 +60,6 @@ public abstract class ClientPlayerInteractionManagerMixin implements IClientPlay
         else if (slotId == -999) {
             // Clicking outside of inventory
             if (MeteorClient.EVENT_BUS.post(DropItemsEvent.get(player.currentScreenHandler.getCursorStack())).isCancelled()) info.cancel();
-        }
-    }
-
-    @Inject(method = "clickSlot", at = @At("HEAD"), cancellable = true)
-    public void onClickArmorSlot(int syncId, int slotId, int button, SlotActionType actionType, PlayerEntity player, CallbackInfo ci) {
-        if (!Modules.get().get(InventoryTweaks.class).armorStorage()) return;
-
-        ScreenHandler screenHandler = player.currentScreenHandler;
-
-        if (screenHandler instanceof PlayerScreenHandler) {
-            if (slotId >= 5 && slotId <= 8) {
-                int armorSlot = (8 - slotId) + 36;
-                if (actionType == SlotActionType.PICKUP && !screenHandler.getCursorStack().isEmpty()) {
-                    clickSlot(syncId, 17, armorSlot, SlotActionType.SWAP, player); //armor slot <-> inv slot
-                    clickSlot(syncId, 17, button, SlotActionType.PICKUP, player); //inv slot <-> cursor slot
-                    clickSlot(syncId, 17, armorSlot, SlotActionType.SWAP, player); //armor slot <-> inv slot
-                    ci.cancel();
-                } else if (actionType == SlotActionType.SWAP) {
-                    if (button >= 10) {
-                        clickSlot(syncId, 45, armorSlot, SlotActionType.SWAP, player);
-                        ci.cancel();
-                    } else {
-                        clickSlot(syncId, 36 + button, armorSlot, SlotActionType.SWAP, player); //invert swap
-                        ci.cancel();
-                    }
-                }
-            }
         }
     }
 

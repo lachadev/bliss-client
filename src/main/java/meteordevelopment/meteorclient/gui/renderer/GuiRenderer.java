@@ -11,12 +11,10 @@ import meteordevelopment.meteorclient.gui.renderer.operations.TextOperation;
 import meteordevelopment.meteorclient.gui.renderer.packer.GuiTexture;
 import meteordevelopment.meteorclient.gui.renderer.packer.TexturePacker;
 import meteordevelopment.meteorclient.gui.widgets.WWidget;
-import meteordevelopment.meteorclient.renderer.GL;
 import meteordevelopment.meteorclient.renderer.Renderer2D;
 import meteordevelopment.meteorclient.renderer.Texture;
 import meteordevelopment.meteorclient.utils.PostInit;
 import meteordevelopment.meteorclient.utils.misc.Pool;
-import meteordevelopment.meteorclient.utils.render.ByteTexture;
 import meteordevelopment.meteorclient.utils.render.RenderUtils;
 import meteordevelopment.meteorclient.utils.render.color.Color;
 import net.minecraft.client.gui.DrawContext;
@@ -28,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import static meteordevelopment.meteorclient.MeteorClient.mc;
 import static meteordevelopment.meteorclient.utils.Utils.getWindowHeight;
 import static meteordevelopment.meteorclient.utils.Utils.getWindowWidth;
 
@@ -35,7 +34,7 @@ public class GuiRenderer {
     private static final Color WHITE = new Color(255, 255, 255);
 
     private static final TexturePacker TEXTURE_PACKER = new TexturePacker();
-    private static ByteTexture TEXTURE;
+    private static Texture TEXTURE;
 
     public static GuiTexture CIRCLE;
     public static GuiTexture TRIANGLE;
@@ -43,6 +42,7 @@ public class GuiRenderer {
     public static GuiTexture RESET;
     public static GuiTexture FAVORITE_NO, FAVORITE_YES;
     public static GuiTexture ONESHOT;
+    public static GuiTexture COPY, PASTE;
 
     public GuiTheme theme;
 
@@ -77,14 +77,20 @@ public class GuiRenderer {
         FAVORITE_YES = addTexture(MeteorClient.identifier("textures/icons/gui/favorite_yes.png"));
         ONESHOT = addTexture(MeteorClient.identifier("textures/icons/gui/oneshot.png"));
 
+        COPY = addTexture(MeteorClient.identifier("textures/icons/gui/copy.png"));
+        PASTE = addTexture(MeteorClient.identifier("textures/icons/gui/paste.png"));
+
         TEXTURE = TEXTURE_PACKER.pack();
     }
 
     public void begin(DrawContext drawContext) {
         this.drawContext = drawContext;
+        this.drawContext.createNewRootLayer();
 
-        GL.enableBlend();
-        GL.enableScissorTest();
+        var matrices = drawContext.getMatrices();
+        matrices.pushMatrix();
+        matrices.scale(1.0f / mc.getWindow().getScaleFactor());
+
         scissorStart(0, 0, getWindowWidth(), getWindowHeight());
     }
 
@@ -94,7 +100,8 @@ public class GuiRenderer {
         for (Runnable task : postTasks) task.run();
         postTasks.clear();
 
-        GL.disableScissorTest();
+        drawContext.getMatrices().popMatrix();
+        drawContext.createNewRootLayer();
     }
 
     public void beginRender() {
@@ -103,29 +110,35 @@ public class GuiRenderer {
     }
 
     public void endRender() {
+        endRender(null);
+    }
+
+    public void endRender(Scissor scissor) {
+        if (scissor != null) scissor.push();
+
         r.end();
         rTex.end();
 
-        r.render(drawContext.getMatrices());
-
-        GL.bindTexture(TEXTURE.getGlId());
-        rTex.render(drawContext.getMatrices());
+        r.render();
+        rTex.render("u_Texture", TEXTURE.getGlTextureView());
 
         // Normal text
         theme.textRenderer().begin(theme.scale(1));
         for (TextOperation text : texts) {
             if (!text.title) text.run(textPool);
         }
-        theme.textRenderer().end(drawContext.getMatrices());
+        theme.textRenderer().end();
 
         // Title text
         theme.textRenderer().begin(theme.scale(theme.titleScale()));
         for (TextOperation text : texts) {
             if (text.title) text.run(textPool);
         }
-        theme.textRenderer().end(drawContext.getMatrices());
+        theme.textRenderer().end();
 
         texts.clear();
+
+        if (scissor != null) scissor.pop();
     }
 
     public void scissorStart(double x, double y, double width, double height) {
@@ -138,20 +151,25 @@ public class GuiRenderer {
             if (y < parent.y) y = parent.y;
             else if (y + height > parent.y + parent.height) height -= (y + height) - (parent.y + parent.height);
 
-            parent.apply();
-            endRender();
+            endRender(parent);
         }
 
         scissorStack.push(scissorPool.get().set(x, y, width, height));
+        drawContext.enableScissor((int) x, (int) y, (int) (x + width), (int) (y + height));
+
         beginRender();
     }
 
     public void scissorEnd() {
         Scissor scissor = scissorStack.pop();
 
-        scissor.apply();
-        endRender();
+        endRender(scissor);
+
+        scissor.push();
         for (Runnable task : scissor.postTasks) task.run();
+        scissor.pop();
+
+        drawContext.disableScissor();
         if (!scissorStack.isEmpty()) beginRender();
 
         scissorPool.free(scissor);
@@ -236,8 +254,7 @@ public class GuiRenderer {
             rTex.texQuad(x, y, width, height, rotation, 0, 0, 1, 1, WHITE);
             rTex.end();
 
-            texture.bind();
-            rTex.render(drawContext.getMatrices());
+            rTex.render(texture.getGlTextureView());
         });
     }
 
@@ -246,7 +263,7 @@ public class GuiRenderer {
     }
 
     public void item(ItemStack itemStack, int x, int y, float scale, boolean overlay) {
-        RenderUtils.drawItem(drawContext, itemStack, x, y, scale, overlay);
+        RenderUtils.drawItem(drawContext, itemStack, x, y, scale, overlay, null, false);
     }
 
     public void absolutePost(Runnable task) {

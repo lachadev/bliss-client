@@ -17,8 +17,6 @@ import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.utils.entity.fakeplayer.FakePlayerEntity;
 import meteordevelopment.meteorclient.utils.entity.fakeplayer.FakePlayerManager;
 
-import static meteordevelopment.meteorclient.MeteorClient.mc;
-
 public class FakePlayer extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 

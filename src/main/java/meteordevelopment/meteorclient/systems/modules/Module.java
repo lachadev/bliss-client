@@ -95,11 +95,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
         if (active) { return; }
 
         if (oneShot) {
-            if (runInMainMenu || Utils.canUpdate()) {
-                if (callback) {
-                    onActivate();
-                }
-            }
+            if (callback) { oneshotActivate(); }
         } else {
             active = true;
             Modules.get().addActive(this);
@@ -111,6 +107,12 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
         }
 
         settings.onActivated();
+    }
+
+    private void oneshotActivate() {
+        if (!runInMainMenu && !Utils.canUpdate()) { return; }
+        
+        onActivate();
     }
 
     public void deactivate() {
@@ -205,16 +207,16 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     @Override
     public Module fromTag(NbtCompound tag) {
         // General
-        keybind.fromTag(tag.getCompound("keybind"));
-        toggleOnBindRelease = tag.getBoolean("toggleOnKeyRelease");
-        chatFeedback = !tag.contains("chatFeedback") || tag.getBoolean("chatFeedback");
-        favorite = tag.getBoolean("favorite");
+        keybind.fromTag(tag.getCompoundOrEmpty("keybind"));
+        toggleOnBindRelease = tag.getBoolean("toggleOnKeyRelease", false);
+        chatFeedback = !tag.contains("chatFeedback") || tag.getBoolean("chatFeedback", false);
+        favorite = tag.getBoolean("favorite", false);
 
         // Settings
         NbtElement settingsTag = tag.get("settings");
         if (settingsTag instanceof NbtCompound) settings.fromTag((NbtCompound) settingsTag);
 
-        boolean active = tag.getBoolean("active");
+        boolean active = tag.getBoolean("active", false);
         if (active != isActive()) toggle();
 
         return this;

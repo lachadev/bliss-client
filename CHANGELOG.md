@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Changes to Meteor are not documented here, only Asteroid specific changes.
 
+## [0.2.6] - 2025-05-31
+Rebased to Meteor Client 1.21.5, Build #28
+This should allow Asteroid to work with the mod "Hold My Items". Refer to Meteor Client for additional fixes.
+
+### Changed
+- Asteroid should now work with most Meteor Client addons, granted they do not rely on modules removed by Asteroid.
+
+## [0.2.5] - 2025-04-24
+Rebased to Meteor Client 1.21.5, Build #12
+
+### Changed
+- Minecraft version is now at 1.21.5.
+
+### Fixed
+- Microsoft account login doesn't work in the current Meteor Client, but it has been patched here.
+  - Note: Player head preview images are incorrect due to the nature of this patch.
+
+## [0.2.4] - 2025-02-03
+Rebased to Meteor Client 1.21.4, Build #22.
+
+Please note that Meteor Client has changed their versioning scheme. Asteroid will continue with its own for now.
+
+### Changed
+- Minecraft version is now at 1.21.4.
+- Improved metadata for Mod Menu.
+
 ## [0.2.3] - 2024-12-03
 Rebased to Meteor Client v0.5.9, Dev Build #2209
 
