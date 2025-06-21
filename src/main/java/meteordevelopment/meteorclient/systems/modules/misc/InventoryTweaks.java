@@ -382,10 +382,6 @@ public class InventoryTweaks extends Module {
         return isActive() && mouseDragItemMove.get();
     }
 
-    public boolean armorStorage() {
-        return false;
-    }
-
     public boolean canSteal(ScreenHandler handler) {
         try {
             return (stealScreens.get().contains(handler.getType()));
