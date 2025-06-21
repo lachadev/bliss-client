@@ -69,7 +69,7 @@ public class WaypointsModule extends Module {
     private final Setting<Integer> maxDeathPositions = sgDeathPosition.add(new IntSetting.Builder()
         .name("max-death-positions")
         .description("The amount of death positions to save, 0 to disable")
-        .defaultValue(0)
+        .defaultValue(5)
         .min(0)
         .sliderMax(20)
         .onChanged(this::cleanDeathWPs)
@@ -79,7 +79,7 @@ public class WaypointsModule extends Module {
     private final Setting<Boolean> dpChat = sgDeathPosition.add(new BoolSetting.Builder()
         .name("chat")
         .description("Send a chat message with your position once you die")
-        .defaultValue(false)
+        .defaultValue(true)
         .build()
     );
 

@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Changes to Meteor are not documented here, only Asteroid specific changes.
 
+## [0.2.7] - 2025-06-22
+Rebased to Meteor Client 1.21.6, Build #1
+Currently Meteor has a render order issue with certain screens. To mitigate this, I have disabled the in-game HUD from
+rendering whilst the Asteroid menu is open.
+
+### Added
+- One-shot module type
+  - Modules of this type do not stay active, instead running once on click.
+  - This is intended for modules, such as `Fake Player`, that do nothing when active.
+  - One-shot modules show as blue by default, and have a cog icon next to their name in the menu.
+
+### Changed
+- Minecraft version is now at 1.21.6.
+- In-game HUD no longer renders behind Asteroid menu
+- Waypoints module now defaults to saving the last 5 deaths, and logging them in chat.
+- `Fake Player` is now a one-shot type module.
+
 ## [0.2.6] - 2025-05-31
 Rebased to Meteor Client 1.21.5, Build #28
 This should allow Asteroid to work with the mod "Hold My Items". Refer to Meteor Client for additional fixes.
