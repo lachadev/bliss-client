@@ -57,7 +57,7 @@ public class BindsCommand extends Command {
 
     private MutableText getTooltip(Module module) {
         MutableText tooltip = Text.literal(Utils.nameToTitle(module.title)).formatted(Formatting.BLUE, Formatting.BOLD).append("\n\n");
-        tooltip.append(Text.literal(module.description).formatted(Formatting.WHITE));
+        tooltip.append(Text.literal(module.getDescription()).formatted(Formatting.WHITE));
         return tooltip;
     }
 }

@@ -44,7 +44,7 @@ public class ModulesCommand extends Command {
 
         tooltip.append(Text.literal(module.title).formatted(Formatting.BLUE, Formatting.BOLD)).append("\n");
         tooltip.append(Text.literal(module.name).formatted(Formatting.GRAY)).append("\n\n");
-        tooltip.append(Text.literal(module.description).formatted(Formatting.WHITE));
+        tooltip.append(Text.literal(module.getDescription()).formatted(Formatting.WHITE));
 
         MutableText finalModule = Text.literal(module.title);
         if (!module.isActive()) finalModule.formatted(Formatting.GRAY);

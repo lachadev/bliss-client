@@ -111,7 +111,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
 
     private void oneshotActivate() {
         if (!runInMainMenu && !Utils.canUpdate()) { return; }
-        
+
         onActivate();
     }
 
@@ -186,6 +186,14 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
 
     public String getInfoString() {
         return null;
+    }
+
+    public String getDescription() {
+        if (this.isCheat && !MeteorClient.BYPASS_CHEATS) {
+            return "(Cheat) " + this.description;
+        }
+
+        return this.description;
     }
 
     @Override
