@@ -27,6 +27,8 @@ Modules marked with an asterisk (`*`) require OP or Singleplayer to use.
 - Auto Respawn: Automatically presses the respawn button on death.
 - Auto Tool: Automatically switches to the correct tool when going to mine a block.
 - Fake Player: Spawns a completely client side fake player. Provides no actual use cases apart from looking cool, or maybe getting a good screenshot.
+- Middle Click Extra: Bind middle click to use a firework rocket, experience bottle, or to add a friend.
+- Name Protect: Hides your username and skin. Useful for taking screenshots without leaking your account.
 - No Interact: Allows the player to blacklist certain blocks from accidentally being interacted with / broken. Useful for amethyst mining.
 - No Mining Trace: Allows the player to break blocks even when an entity is blocking them.
 - Portals: Allows players to access their inventory whilst sitting in a nether portal. Not sure why that isn't default tbh.
@@ -41,13 +43,16 @@ Modules marked with an asterisk (`*`) require OP or Singleplayer to use.
 - Breadcrumbs: Draws a line behind the player letting them backtrace. Good for players who get lost easily.
 - Break Indicators: Break indicator customization and improvements.
 - Camera Tweaks\*: Customize the third person camera. Allows for clipping in to blocks.
+- Entity Owner: Displays the owner of the tamed animal above the given entity.
 - Free Look: Allows the player to position the third person camera, then move their head normally.
 - Freecam\*: Frees the players camera to act like spectator mode.
 - Fullbright: Disables lighting, similar to night vision.
 - Hand View: Customize how items are rendered in the players hand.
 - Item Highlight: Highlights particular items in GUIs, to allow you to find the item you are looking for easier.
+- Item Physics: Items lay on the ground, rather than bouncing up and down.
 - Light Overlay: Renders light levels as an overlay on blocks on the ground.
 - Marker: Render shapes as a client side hologram. Useful for planning out builds.
+- Nametags\*: Render customisable nametags above selected entities.
 - No Render: Prevent things from rendering, like nether fog, particles or even certain entities.
 - Tracers\*: Render lines from the crosshair to the targeted entities. Useful for finding lost items.
 - Trail: Renders a trail of particles behind the player. Useless but fun.

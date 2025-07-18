@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Changes to Meteor are not documented here, only Asteroid specific changes.
 
+## [0.3.0] - 2025-07-18
+Rebased to Meteor Client 1.21.8, Build #5
+Minor version bumped as a few new modules have been brought over from Meteor.
+
+### Added
+- `MeteorClient.BYPASS_CHEATS` boolean flag.
+  - When set to `true`, cheat modules can be used in Multiplayer without OP.
+  - The version of Asteroid uploaded to Modrinth will always have this set to `false`.
+#### New Modules
+- `Entity Owner`: Displays the owner of tamed animals above them.
+- `Item Physics`: Items render as if they are laying on the ground, rather than floating.
+- `Middle Click Extra`: Allows a couple quick actions to be bound to middle click.
+- `Name Protect`: Basically Streamer Mode, hides your username, and optionally your skin.
+- `Nametags`: Renders customisable nametags on select entities.
+
+### Changed
+- Minecraft version is not at 1.21.8.
+- Modules that are cheats are now labelled as such in their description.
+
 ## [0.2.7] - 2025-06-22
 Rebased to Meteor Client 1.21.6, Build #1
 Currently Meteor has a render order issue with certain screens. To mitigate this, I have disabled the in-game HUD from
