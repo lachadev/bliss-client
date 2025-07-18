@@ -413,6 +413,8 @@ public class Modules extends System<Modules> {
         add(new AutoRespawn());
         add(new AutoTool());
         add(new FakePlayer());
+        add(new MiddleClickExtra());
+        add(new NameProtect());
         add(new NoInteract());
         add(new NoMiningTrace());
         add(new Portals());
@@ -428,13 +430,16 @@ public class Modules extends System<Modules> {
         add(new Breadcrumbs());
         add(new BreakIndicators());
         addCheat(new CameraTweaks());
+        add(new EntityOwner());
         addCheat(new Freecam());
         add(new FreeLook());
         add(new Fullbright());
         add(new HandView());
         add(new ItemHighlight());
+        add(new ItemPhysics());
         add(new LightOverlay());
         add(new Marker());
+        addCheat(new Nametags());
         add(new NoRender());
         addCheat(new Tracers());
         add(new Trail());

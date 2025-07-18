@@ -652,6 +652,6 @@ public class Utils {
 
     public static boolean cheatsAllowed() {
         if (mc.player == null) { return false; }
-        return mc.player.hasPermissionLevel(2) || mc.isInSingleplayer();
+        return MeteorClient.BYPASS_CHEATS || mc.player.hasPermissionLevel(2) || mc.isInSingleplayer();
     }
 }

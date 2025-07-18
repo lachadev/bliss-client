@@ -61,6 +61,8 @@ public class MeteorClient implements ClientModInitializer {
     public static final File FOLDER = FabricLoader.getInstance().getGameDir().resolve(CONFIG_DIR).toFile();
     public static final Logger LOG;
 
+    public static boolean BYPASS_CHEATS = false;
+
     static {
         MOD_META = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().getMetadata();
 
