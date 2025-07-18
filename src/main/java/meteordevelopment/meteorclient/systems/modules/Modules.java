@@ -410,6 +410,7 @@ public class Modules extends System<Modules> {
 
     private void initPlayer() {
         add(new AutoReplenish());
+        add(new AutoRespawn());
         add(new AutoTool());
         add(new FakePlayer());
         add(new NoInteract());
@@ -447,7 +448,6 @@ public class Modules extends System<Modules> {
     private void initMisc() {
         add(new AutoClicker());
         add(new AutoReconnect());
-        add(new AutoRespawn());
         add(new BetterChat());
         add(new DiscordPresence());
         add(new SoundBlocker());
