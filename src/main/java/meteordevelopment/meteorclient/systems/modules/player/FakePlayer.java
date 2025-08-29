@@ -43,6 +43,8 @@ public class FakePlayer extends Module {
         .build()
     );
 
+    private WTable table;
+
     public FakePlayer() {
         super(Categories.Player, "fake-player", "Spawns a client-side fake player for testing usages.");
         oneShot = true;
@@ -55,8 +57,14 @@ public class FakePlayer extends Module {
     }
 
     @Override
+    public void onDeactivate() {
+        FakePlayerManager.clear();
+        if (table != null) table.clear();
+    }
+
+    @Override
     public WWidget getWidget(GuiTheme theme) {
-        WTable table = theme.table();
+        table = theme.table();
         fillTable(theme, table);
 
         return table;

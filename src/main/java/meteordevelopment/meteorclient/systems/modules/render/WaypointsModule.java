@@ -15,7 +15,7 @@ import meteordevelopment.meteorclient.gui.widgets.WWidget;
 import meteordevelopment.meteorclient.gui.widgets.containers.WTable;
 import meteordevelopment.meteorclient.gui.widgets.pressable.WButton;
 import meteordevelopment.meteorclient.gui.widgets.pressable.WCheckbox;
-import meteordevelopment.meteorclient.gui.widgets.pressable.WMinus;
+import meteordevelopment.meteorclient.gui.widgets.pressable.WConfirmedMinus;
 import meteordevelopment.meteorclient.renderer.text.TextRenderer;
 import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.systems.modules.Categories;
@@ -221,7 +221,7 @@ public class WaypointsModule extends Module {
             WButton edit = table.add(theme.button(GuiRenderer.EDIT)).widget();
             edit.action = () -> mc.setScreen(new EditWaypointScreen(theme, waypoint, () -> initTable(theme, table)));
 
-            WMinus remove = table.add(theme.minus()).widget();
+            WConfirmedMinus remove = table.add(theme.confirmedMinus()).widget();
             remove.action = () -> {
                 Waypoints.get().remove(waypoint);
                 initTable(theme, table);

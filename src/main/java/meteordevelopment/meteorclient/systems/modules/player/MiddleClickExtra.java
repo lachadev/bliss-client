@@ -184,6 +184,7 @@ public class MiddleClickExtra extends Module {
 //        Pearl(Items.ENDER_PEARL, true),
         Rocket(Items.FIREWORK_ROCKET, true),
         XP(Items.EXPERIENCE_BOTTLE, true),
+        WindCharge(Items.WIND_CHARGE, true),
 
 //        Bow(Items.BOW, false),
 //        Gap(Items.GOLDEN_APPLE, false),
