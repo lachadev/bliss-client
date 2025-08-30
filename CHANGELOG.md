@@ -7,8 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Changes to Meteor are not documented here, only Asteroid specific changes.
 
+## [0.3.1] - 2025-08-31
+Rebased to Meteor Client 1.21.8, Build #26.
+
+### Added
+- Configuration in waypoints to allow them to auto-hide when the player gets in range.
+  - Automatic death waypoints now auto-hide when the player gets within 4 blocks.
+
+### Changed
+- Updated some formatting in the changelog.
+- Module tooltips now contain their hyphenated id.
+- A 1 tick attack in `.input` will now perform a punch rather than a dig.
+#### `.macro` Command Overhaul
+In the past, calling a macro from itself would cause a game crash.
+To mitigate this, the `.macro` command now schedules macros to be run in the next tick.
+
+As such, the syntax of the command has been overhauled:
+```
+.macro <name>        | Schedules the given macro
+.macro <name> <time> | Schedules the given macro after <time> duration
+.macro clear         | Clears all scheduled macros
+.macro clear <name>  | Clears the given macro
+```
+
 ## [0.3.0] - 2025-07-18
-Rebased to Meteor Client 1.21.8, Build #5
+Rebased to Meteor Client 1.21.8, Build #5.
+
 Minor version bumped as a few new modules have been brought over from Meteor.
 
 ### Added
@@ -27,7 +51,8 @@ Minor version bumped as a few new modules have been brought over from Meteor.
 - Modules that are cheats are now labelled as such in their description.
 
 ## [0.2.7] - 2025-06-22
-Rebased to Meteor Client 1.21.6, Build #1
+Rebased to Meteor Client 1.21.6, Build #1.
+
 Currently Meteor has a render order issue with certain screens. To mitigate this, I have disabled the in-game HUD from
 rendering whilst the Asteroid menu is open.
 
@@ -44,14 +69,15 @@ rendering whilst the Asteroid menu is open.
 - `Fake Player` is now a one-shot type module.
 
 ## [0.2.6] - 2025-05-31
-Rebased to Meteor Client 1.21.5, Build #28
+Rebased to Meteor Client 1.21.5, Build #28.
+
 This should allow Asteroid to work with the mod "Hold My Items". Refer to Meteor Client for additional fixes.
 
 ### Changed
 - Asteroid should now work with most Meteor Client addons, granted they do not rely on modules removed by Asteroid.
 
 ## [0.2.5] - 2025-04-24
-Rebased to Meteor Client 1.21.5, Build #12
+Rebased to Meteor Client 1.21.5, Build #12.
 
 ### Changed
 - Minecraft version is now at 1.21.5.
@@ -70,7 +96,7 @@ Please note that Meteor Client has changed their versioning scheme. Asteroid wil
 - Improved metadata for Mod Menu.
 
 ## [0.2.3] - 2024-12-03
-Rebased to Meteor Client v0.5.9, Dev Build #2209
+Rebased to Meteor Client v0.5.9, Dev Build #2209.
 
 This fixes an issue with `.enchant`.
 
@@ -82,7 +108,7 @@ This fixes an issue with `.enchant`.
   - This was part of a larger refactor that stripped a lot of unused systems.
 
 ## [0.2.2] - 2024-10-03
-Rebased to Meteor Client v0.5.8, Dev Build #2174
+Rebased to Meteor Client v0.5.8, Dev Build #2174.
 
 This fixes Indium incompatibility.
 
@@ -95,7 +121,7 @@ This fixes Indium incompatibility.
 - Macros no longer require a keybind to be saved.
 
 ## [0.2.1] - 2024-08-12
-Rebased to Meteor Client v0.5.8, Dev Build #2149
+Rebased to Meteor Client v0.5.8, Dev Build #2149.
 
 Minor improvements to Modules system for use with Addons.
 
@@ -104,7 +130,7 @@ Minor improvements to Modules system for use with Addons.
 - Implemented some helpful methods for working with Modules in Addons.
 
 ## [0.2.0] - 2024-08-06
-Rebased to Meteor Client v0.5.8, Dev Build #2143
+Rebased to Meteor Client v0.5.8, Dev Build #2143.
 
 Updates to UI, various improvements.
 
