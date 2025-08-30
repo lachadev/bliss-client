@@ -26,6 +26,10 @@ Modules have been split in to separate categories, in order to make them easier 
 
 [Fake Player](fake-player.md)
 
+[Middle Click Extra](middle-click-extra.md)
+
+[Name Protect](name-protect.md)
+
 [No Interact](no-interact.md)
 
 [No Mining Trace](no-mining-trace.md)
@@ -49,11 +53,15 @@ Modules have been split in to separate categories, in order to make them easier 
 
 [Blur](blur.md)
 
+[Boss Stack](boss-stack.md)
+
 [Breadcrumbs](breadcrumbs.md)
 
 [Break Indicators](break-indicators.md)
 
 [Camera Tweaks](camera-tweaks.md)
+
+[Entity Owner](entity-owner.md)
 
 [Free Look](free-look.md)
 
@@ -65,9 +73,13 @@ Modules have been split in to separate categories, in order to make them easier 
 
 [Item Highlight](item-highlight.md)
 
+[Item Physics](item-physics.md)
+
 [Light Overlay](light-overlay.md)
 
 [Marker](marker.md)
+
+[Nametags](nametags.md)
 
 [No Render](no-render.md)
 
@@ -96,6 +108,8 @@ Modules have been split in to separate categories, in order to make them easier 
 [Better Chat](better-chat.md)
 
 [Discord Presence](discord-presence.md)
+
+[Inventory Tweaks](inventory-tweaks.md)
 
 [Sound Blocker](sound-blocker.md)
 
