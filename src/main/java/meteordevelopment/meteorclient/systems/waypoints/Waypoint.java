@@ -106,6 +106,7 @@ public class Waypoint implements ISerializable<Waypoint> {
         .description("Hides the waypoint if the player is closer than this distance, and hide when near is enabled.")
         .defaultValue(8)
         .sliderRange(0, 32)
+        .visible(hideWhenNear::get)
         .build()
     );
 
@@ -118,8 +119,7 @@ public class Waypoint implements ISerializable<Waypoint> {
     public Waypoint(NbtElement tag) {
         NbtCompound nbt = (NbtCompound) tag;
 
-        if (nbt.contains("uuid")) uuid = nbt.get("uuid", Uuids.INT_STREAM_CODEC).get();
-        else uuid = UUID.randomUUID();
+        uuid = nbt.get("uuid", Uuids.INT_STREAM_CODEC).orElse(UUID.randomUUID());
 
         fromTag(nbt);
     }
@@ -153,8 +153,8 @@ public class Waypoint implements ISerializable<Waypoint> {
     }
 
     public void hideWhenNearCheck(int distance) {
-        if (!hideWhenNear.get()) { return; }
-        if (distance > hideWhenNearDistance.get()) { return; }
+        if (!hideWhenNear.get()) return;
+        if (distance > hideWhenNearDistance.get()) return;
 
         visible.set(false);
     }
