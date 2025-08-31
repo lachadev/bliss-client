@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Changes to Meteor are not documented here, only Asteroid specific changes.
 
+## [0.3.2] - 2025-08-31
+Rebased to Meteor Client 1.21.8, Build #31.
+
+### Fixed
+- Automatic death waypoints no longer immediately hide themselves on creation.
+
 ## [0.3.1] - 2025-08-31
 Rebased to Meteor Client 1.21.8, Build #26.
 
